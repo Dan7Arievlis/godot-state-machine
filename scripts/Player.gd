@@ -53,7 +53,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		%JumpBuffer.start()
 	elif event.is_action_released("jump"):
 		%CoyoteTime.stop()
-	
+	if Input.is_action_just_pressed("dash"):
+		$FSM.state.finished.emit(PlayerState.DASH)
 	if event.is_action_pressed("attack"):
 		%AttackBuffer.start()
 

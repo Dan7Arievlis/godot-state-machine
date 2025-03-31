@@ -31,8 +31,6 @@ func _transition_to_next_state(target_state_path : String, data : Dictionary = {
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("dash"):
-		state.finished.emit(PlayerState.DASH)
 	state.handle_input(event)
 
 
