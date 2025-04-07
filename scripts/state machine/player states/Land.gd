@@ -1,7 +1,7 @@
 extends PlayerState
 
 func enter(previous_state_path : String, data := {}) -> void:
-	player.play_animation(LAND)
+	player.play_animation(PlayerStates.LAND)
 
 
 func physics_update(delta: float) -> void:
@@ -10,4 +10,4 @@ func physics_update(delta: float) -> void:
 	player.move_and_slide()
 	
 	await player.animation_player.animation_finished
-	finished.emit(IDLE)
+	finished.emit(get_state_name(PlayerStates.IDLE).to_pascal_case())

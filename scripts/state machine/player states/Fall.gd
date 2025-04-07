@@ -1,7 +1,7 @@
 extends PlayerState
 
 func enter(previous_state_path : String, data := {}) -> void:
-	player.play_animation(FALL)
+	player.play_animation(PlayerStates.FALL)
 
 
 func physics_update(delta: float) -> void:
@@ -10,5 +10,7 @@ func physics_update(delta: float) -> void:
 	player.handle_turn(player.walk_speed, player.air_accel, player.air_friction, player.air_turn_speed, delta)
 	player.move_and_slide()
 	
-	if player.is_on_floor():
-		finished.emit(LAND)
+	if player.is_on_floor() and not player.grab():
+		finished.emit(get_state_name(PlayerStates.LAND).to_pascal_case())
+	elif player.grab():
+		finished.emit(get_state_name(PlayerStates.GRAB).to_pascal_case())

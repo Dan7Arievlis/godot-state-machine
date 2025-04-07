@@ -1,14 +1,14 @@
 extends PlayerState
 
 func enter(previous_state_path : String, data := {}) -> void:
-	player.play_animation(CROUCH_IDLE)
+	player.play_animation(PlayerStates.CROUCH_IDLE)
 
 
 func handle_input(event: InputEvent) -> void:
 	if event.is_action_pressed("crouch"):
-		finished.emit(CROUCH_UP)
+		finished.emit(get_state_name(PlayerStates.CROUCH_UP).to_pascal_case())
 	if event.is_action_pressed("drink"):
-		finished.emit(CROUCH_UP, {"drink" = true})
+		finished.emit(get_state_name(PlayerStates.CROUCH_UP).to_pascal_case(), {"drink" = true})
 
 
 func physics_update(delta: float) -> void:
@@ -17,10 +17,10 @@ func physics_update(delta: float) -> void:
 	player.move_and_slide()
 
 	if not player.is_on_floor():
-		finished.emit(APEX)
+		finished.emit(get_state_name(PlayerStates.APEX).to_pascal_case())
 	elif player.jump() and not %CeilingCheck.is_colliding():
-		finished.emit(JUMP)
+		finished.emit(get_state_name(PlayerStates.JUMP).to_pascal_case())
 	elif player.get_input_direction():
-		finished.emit(CROUCH_WALK)
+		finished.emit(get_state_name(PlayerStates.CROUCH_WALK).to_pascal_case())
 	elif player.attack():
-		finished.emit(CROUCH_UP, {"attack" = true})
+		finished.emit(get_state_name(PlayerStates.CROUCH_UP).to_pascal_case(), {"attack" = true})

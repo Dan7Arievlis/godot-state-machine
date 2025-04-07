@@ -1,14 +1,14 @@
 extends PlayerState
 
 func enter(previous_state_path : String, data := {}) -> void:
-	player.play_animation(WALK)
+	player.play_animation(PlayerStates.WALK)
 
 
 func handle_input(event: InputEvent) -> void:
 	if event.is_action_pressed("crouch"):
-		finished.emit(CROUCH)
+		finished.emit(get_state_name(PlayerStates.CROUCH).to_pascal_case())
 	if event.is_action_pressed("drink"):
-		finished.emit(DRINK)
+		finished.emit(get_state_name(PlayerStates.DRINK).to_pascal_case())
 
 
 func physics_update(delta: float) -> void:
@@ -18,16 +18,16 @@ func physics_update(delta: float) -> void:
 
 	if not player.is_on_floor():
 		if player.grab():
-			finished.emit(GRAB)
+			finished.emit(get_state_name(PlayerStates.GRAB).to_pascal_case())
 			return
-		finished.emit(APEX)
+		finished.emit(get_state_name(PlayerStates.APEX).to_pascal_case())
 	elif player.jump():
-		finished.emit(JUMP)
+		finished.emit(get_state_name(PlayerStates.JUMP).to_pascal_case())
 	elif not player.get_input_direction() and abs(player.velocity.x) < 60:
-		finished.emit(IDLE)
+		finished.emit(get_state_name(PlayerStates.IDLE).to_pascal_case())
 		return
 	elif player.attack():
-		finished.emit(ATTACK_1)
+		finished.emit(get_state_name(PlayerStates.ATTACK_1).to_pascal_case())
 	else:
 		if player.grab():
-			finished.emit(GRAB)
+			finished.emit(get_state_name(PlayerStates.GRAB).to_pascal_case())

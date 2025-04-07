@@ -54,7 +54,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_released("jump"):
 		%CoyoteTime.stop()
 	if Input.is_action_just_pressed("dash"):
-		$FSM.state.finished.emit(PlayerState.DASH)
+		$FSM.state.finished.emit(PlayerState.PlayerStates.keys()[PlayerState.PlayerStates.DASH].to_pascal_case())
 	if event.is_action_pressed("attack"):
 		%AttackBuffer.start()
 
@@ -109,8 +109,8 @@ func attack() -> bool:
 	return res
 
 
-func play_animation(animation : String) -> void:
-	animation_player.play(animation.to_snake_case())
+func play_animation(state : PlayerState.PlayerStates) -> void:
+	animation_player.play(PlayerState.PlayerStates.keys()[state].to_snake_case())
 
 
 func grab() -> bool:

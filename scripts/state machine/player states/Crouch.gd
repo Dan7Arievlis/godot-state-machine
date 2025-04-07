@@ -1,7 +1,7 @@
 extends PlayerState
 
 func enter(previous_state_path : String, data := {}) -> void:
-	player.play_animation(CROUCH)
+	player.play_animation(PlayerStates.CROUCH)
 
 
 func physics_update(delta: float) -> void:
@@ -10,7 +10,7 @@ func physics_update(delta: float) -> void:
 	player.move_and_slide()
 
 	if not player.is_on_floor():
-		finished.emit(APEX)
+		finished.emit(get_state_name(PlayerStates.APEX).to_pascal_case())
 		return
 	await  player.animation_player.animation_finished
-	finished.emit(CROUCH_IDLE)
+	finished.emit(get_state_name(PlayerStates.CROUCH_IDLE).to_pascal_case())

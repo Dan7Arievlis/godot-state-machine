@@ -1,7 +1,7 @@
 extends PlayerState
 
 func enter(previous_state_path : String, data := {}) -> void:
-	player.play_animation(APEX)
+	player.play_animation(PlayerStates.APEX)
 
 
 func physics_update(delta: float) -> void:
@@ -11,12 +11,12 @@ func physics_update(delta: float) -> void:
 	player.move_and_slide()
 	
 	if player.velocity.y > player.fall_velocity_threshold:
-		finished.emit(FALL)
+		finished.emit(get_state_name(PlayerStates.FALL).to_pascal_case())
 	if player.is_on_floor():
-		finished.emit(IDLE)
+		finished.emit(get_state_name(PlayerStates.IDLE).to_pascal_case())
 	else:
 		if player.grab():
-			finished.emit(GRAB)
+			finished.emit(get_state_name(PlayerStates.GRAB).to_pascal_case())
 			return
 		if player.jump():
-			finished.emit(JUMP)
+			finished.emit(get_state_name(PlayerStates.JUMP).to_pascal_case())

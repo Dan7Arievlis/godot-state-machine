@@ -3,7 +3,7 @@ extends PlayerState
 var move : bool = false
 
 func enter(previous_state_path : String, data := {}) -> void:
-	player.play_animation(LEDGE_GRAB)
+	player.play_animation(PlayerStates.LEDGE_GRAB)
 
 
 func on_can_jump():
@@ -19,4 +19,4 @@ func physics_update(delta: float) -> void:
 	
 	await player.animation_player.animation_finished
 	move = false
-	finished.emit(IDLE)
+	finished.emit(get_state_name(PlayerStates.IDLE).to_pascal_case())

@@ -1,7 +1,7 @@
 extends PlayerState
 
 func enter(previous_state_path : String, data := {}) -> void:
-	player.play_animation(DRINK)
+	player.play_animation(PlayerStates.DRINK)
 
 
 func on_drinked(effect):
@@ -15,4 +15,4 @@ func physics_update(delta: float) -> void:
 	player.move_and_slide()
 	
 	await player.animation_player.animation_finished
-	finished.emit(IDLE)
+	finished.emit(get_state_name(PlayerStates.IDLE).to_pascal_case())

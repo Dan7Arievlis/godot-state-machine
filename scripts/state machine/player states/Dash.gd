@@ -8,7 +8,7 @@ func enter(previous_state_path : String, data := {}) -> void:
 		return
 	if previous_state_path != name:
 		crouch = ["Crouch", "CrouchWalk", "CrouchIdle"].has(previous_state_path)
-	player.play_animation(DASH)
+	player.play_animation(PlayerStates.DASH)
 
 
 func physics_update(delta: float) -> void:
@@ -20,6 +20,6 @@ func physics_update(delta: float) -> void:
 	await player.animation_player.animation_finished
 	player.can_dash = false
 	if crouch:
-		finished.emit(CROUCH)
+		finished.emit(get_state_name(PlayerStates.CROUCH).to_pascal_case())
 		return
-	finished.emit(IDLE)
+	finished.emit(get_state_name(PlayerStates.IDLE).to_pascal_case())
