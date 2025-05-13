@@ -1,8 +1,8 @@
 extends PlayerState
 
-var jump_cut = func(): return 0.5 if not Input.is_action_pressed("jump") else 1.0
+var jump_cut = func(): return 0.5 if not Input.is_action_pressed("jump") else 1
 
-func enter(_previous_state_path : String, _data := {}) -> void:
+func enter(previous_state_path : String, data := {}) -> void:
 	player.play_animation(PlayerStates.JUMP)
 	player.velocity.y = -player.jump_impulse
 
@@ -15,5 +15,5 @@ func physics_update(delta: float) -> void:
 
 	if abs(player.velocity.y) < player.apex_margin:
 		finished.emit(get_state_name(PlayerStates.APEX).to_pascal_case())
-	#if player.is_on_floor():
-		#finished.emit(get_state_name(PlayerStates.LAND).to_pascal_case())
+	if player.is_on_floor():
+		finished.emit(get_state_name(PlayerStates.LAND).to_pascal_case())

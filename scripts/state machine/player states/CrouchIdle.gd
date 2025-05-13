@@ -1,6 +1,6 @@
 extends PlayerState
 
-func enter(_previous_state_path : String, _data := {}) -> void:
+func enter(previous_state_path : String, data := {}) -> void:
 	player.play_animation(PlayerStates.CROUCH_IDLE)
 
 
@@ -9,10 +9,6 @@ func handle_input(event: InputEvent) -> void:
 		finished.emit(get_state_name(PlayerStates.CROUCH_UP).to_pascal_case())
 	if event.is_action_pressed("drink"):
 		finished.emit(get_state_name(PlayerStates.CROUCH_UP).to_pascal_case(), {"drink" = true})
-	#if event.is_action_pressed("shield_up"):
-		#finished.emit(get_state_name(PlayerStates.CROUCH_UP).to_pascal_case(), {"shield" = true})
-	if event.is_action_pressed("dash"):
-		finished.emit(get_state_name(PlayerStates.DASH).to_pascal_case())
 
 
 func physics_update(delta: float) -> void:
@@ -28,5 +24,3 @@ func physics_update(delta: float) -> void:
 		finished.emit(get_state_name(PlayerStates.CROUCH_WALK).to_pascal_case())
 	elif player.attack():
 		finished.emit(get_state_name(PlayerStates.CROUCH_UP).to_pascal_case(), {"attack" = true})
-	if player.shield_up:
-		finished.emit(get_state_name(PlayerStates.CROUCH_UP).to_pascal_case(), {"shield" = true})

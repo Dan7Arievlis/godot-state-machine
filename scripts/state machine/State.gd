@@ -17,7 +17,7 @@ func physics_update(_delta: float) -> void:
 	pass
 
 
-func enter(_previous_state_path: String, _data := {}) -> void:
+func enter(previous_state_path: String, data := {}) -> void:
 	pass
 
 

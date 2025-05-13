@@ -1,11 +1,11 @@
 extends PlayerState
 
-func enter(_previous_state_path : String, _data := {}) -> void:
+func enter(previous_state_path : String, data := {}) -> void:
 	player.play_animation(PlayerStates.APEX)
 
 
 func physics_update(delta: float) -> void:
-	var mod = player.apex_modifier if player.velocity.y < abs(player.apex_margin) and Input.is_action_pressed("jump") else 1.0
+	var mod = player.apex_modifier if player.velocity.y < abs(player.apex_margin)  and Input.is_action_pressed("jump") else 1
 	player.handle_turn(player.walk_speed * mod, player.air_accel, player.air_friction, player.air_turn_speed, delta)
 	player.velocity.y += player.gravity * delta * player.gravity_modifier
 	player.move_and_slide()
