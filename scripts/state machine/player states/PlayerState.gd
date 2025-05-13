@@ -11,29 +11,30 @@ enum PlayerStates {
 	LAND, #DONE
 	DASH, #DONE
 	ATTACK_1, #DONE
-	ATTACK_2, #TODO projeto de combo
-	ATTACK_3, #TODO projeto de combo
-	ATTACK_4, #TODO projeto de combo
+	ATTACK_2, #FIXME projeto de combo ou frame data
+	ATTACK_3, #FIXME projeto de combo ou frame data
+	ATTACK_4, #FIXME projeto de combo ou frame data
 	CROUCH, #DONE
 	CROUCH_IDLE, #DONE
 	CROUCH_WALK, #DONE
 	CROUCH_UP, #DONE
 	GRAB, #DONE
 	LEDGE_GRAB, #DONE
-	DRINK, #FIXME projeto de cooldown inventário e UI
-	DIE, #TODO projeto de hitbox
-	HURT, #TODO projeto de hitbox
+	DIE, #DONE
+	HURT, #DONE
+	ROLL, #DONE
+	SHIELD_UP, #DONE
+	SHIELD, #DONE
+	SHIELD_BASH, #DONE
+	WALL_SIDE, #TODO projeto de colisões
 	WIN, #TODO projeto de colisões
 	LADDERS, #TODO projeto de colisões
-	POWER_UP, #TODO projeto de cooldowns inventário e UI
-	ROLL, #TODO projeto de hitbox
-	SHIELD_UP, #TODO projeto de hitbox
-	SHIELD, #TODO projeto de hitbox
-	SHIELD_BASH, #TODO projeto de hitbox
 	TALK, #TODO projeto de colisões
-	WALL_SIDE, #TODO projeto de hitbox
+	PUSH, #TODO projeto de colisões
+	DRINK, #FIXME projeto de cooldown inventário e UI
+	POWER_UP, #TODO projeto de cooldowns inventário e UI
 }
-#region_end
+#endregion
 
 var player : Player
 
@@ -43,6 +44,10 @@ func _ready() -> void:
 	assert(player != null, "The PlayerState state type must be used only in the player scene. It needs the owner to be a Player node.")
 
 
-func get_state_name(state : PlayerStates) -> String:
-	print(PlayerStates.keys()[state])
+static func get_state_name(state : PlayerStates) -> String:
 	return PlayerStates.keys()[state]
+
+
+static func get_state(state_name : String) -> PlayerStates:
+	state_name = state_name.to_snake_case().to_upper()
+	return PlayerStates.keys().rfind(state_name) as PlayerStates

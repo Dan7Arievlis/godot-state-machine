@@ -1,6 +1,8 @@
 extends PlayerState
 
-func enter(previous_state_path : String, data := {}) -> void:
+func enter(_previous_state_path : String, _data := {}) -> void:
+	#player.animation_player.play("player_animations/RESET")
+	#await  player.animation_player.animation_finished
 	player.play_animation(PlayerStates.WALK)
 
 
@@ -9,6 +11,10 @@ func handle_input(event: InputEvent) -> void:
 		finished.emit(get_state_name(PlayerStates.CROUCH).to_pascal_case())
 	if event.is_action_pressed("drink"):
 		finished.emit(get_state_name(PlayerStates.DRINK).to_pascal_case())
+	if event.is_action_pressed("dash"):
+		finished.emit(get_state_name(PlayerStates.DASH).to_pascal_case())
+	#if event.is_action_pressed("shield_up"):
+		#finished.emit(get_state_name(PlayerStates.SHIELD_UP).to_pascal_case())
 
 
 func physics_update(delta: float) -> void:
@@ -28,6 +34,8 @@ func physics_update(delta: float) -> void:
 		return
 	elif player.attack():
 		finished.emit(get_state_name(PlayerStates.ATTACK_1).to_pascal_case())
+	elif player.shield_up:
+		finished.emit(get_state_name(PlayerStates.SHIELD_UP).to_pascal_case())
 	else:
 		if player.grab():
 			finished.emit(get_state_name(PlayerStates.GRAB).to_pascal_case())

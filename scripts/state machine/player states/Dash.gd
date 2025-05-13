@@ -2,7 +2,7 @@ extends PlayerState
 
 var crouch : bool
 
-func enter(previous_state_path : String, data := {}) -> void:
+func enter(previous_state_path : String, _data := {}) -> void:
 	if not player.can_dash or %CeilingCheck.is_colliding():
 		finished.emit(previous_state_path)
 		return
@@ -11,8 +11,12 @@ func enter(previous_state_path : String, data := {}) -> void:
 	player.play_animation(PlayerStates.DASH)
 
 
-func physics_update(delta: float) -> void:
-	var direction = -1 if $"../../Sprite".flip_h else 1
+func exit():
+	player.hurtbox.set_disabled(false)
+
+
+func physics_update(_delta: float) -> void:
+	var direction = -1 if %Sprite.flip_h else 1
 	player.velocity.x = player.dash_force * direction
 	player.velocity.y = 0
 	player.move_and_slide()
